@@ -7,15 +7,19 @@ import (
 )
 
 func main() {
+	
 	s := "hello\n\nhey"
 	str := ""
+	splited:=strings.Split(s,"\n")
+	for p :=range splited{
+
 	for i := 0; i < 8; i++ {
-		for j,_:=  range s {
+		for j:=  range splited[p] {
 		
-			str = str + sis(rune(s[j]), i)
+			str = str + sis(rune(splited[p][j]), i)
 		}
 		str=str+"\n"
-	}
+	} }
 	fmt.Print(str)
 }
 
