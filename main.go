@@ -23,10 +23,10 @@ func main() {
 		} else {
 			for i := 0; i < 8; i++ {
 				for p, char := range line {
-				// Ensure that the ASCII value is within the valid range
+					// Ensure that the ASCII value is within the valid range
 					if int(char)-32 < 0 || int(char)-32 > 127 {
 						fmt.Print("Invalid ASCII value:", line[p])
-						j=j+1
+						j = j + 1
 
 					}
 					fmt.Print(ReplaceString(char, i))
@@ -38,7 +38,7 @@ func main() {
 }
 
 func ReplaceString(a rune, b int) string {
-	lines := readLinesFromFile("standard.txt")
+	lines := readLinesFromFile("thinkertoy.txt")
 	// Calculate the index of the line based on the ASCII value and offset
 	index := (int(a)-32)*9 + b + 1
 
@@ -46,7 +46,7 @@ func ReplaceString(a rune, b int) string {
 	if index < 0 || index >= len(lines) {
 		return ""
 	}
-	
+
 	return lines[index]
 }
 
@@ -56,6 +56,8 @@ func readLinesFromFile(filename string) []string {
 		fmt.Println("Error reading file:", err)
 		os.Exit(0)
 	}
-	lines := strings.Split(string(filecontent), "\n")
+	s := string(filecontent)
+	s = strings.ReplaceAll(s, "\r", "")
+	lines := strings.Split(s, "\n")
 	return lines
 }
