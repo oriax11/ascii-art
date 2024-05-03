@@ -7,21 +7,30 @@ import (
 )
 
 func main() {
-	
-	s := "hello\n\nhey"
-	str := ""
-	splited:=strings.Split(s,"\n")
-	for p :=range splited{
+    s := os.Args[1]
+    var builder strings.Builder
 
-	for i := 0; i < 8; i++ {
-		for j:=  range splited[p] {
+    splitted := strings.Split(s, "\\n")
+	 fmt.Println(splitted)
+    for _, line := range splitted {
+		if line==""{
+			builder.WriteString("\n")
+
+		}else{
+        for i := 0; i < 8; i++ {
+            for _, char := range line {
+                builder.WriteString(sis(char, i))
+            }
+            builder.WriteString("\n")
+        } }
+
 		
-			str = str + sis(rune(splited[p][j]), i)
-		}
-		str=str+"\n"
-	} }
-	fmt.Print(str)
+
+    }
+
+    fmt.Print(builder.String())
 }
+
 
 func sis(a rune, b int) string {
 	filename := "standard.txt"
@@ -33,7 +42,7 @@ func sis(a rune, b int) string {
 	lines := strings.Split(string(filecontent), "\n")
 
 	// Ensure that the ASCII value is within the valid range
-	if int(a)-32 < 0 || int(a)-32 >= len(lines) {
+	if int(a)-32 < 0 || int(a)-32 > 127 {
 		fmt.Println("Invalid ASCII value:", a)
 	}
 
