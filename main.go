@@ -13,10 +13,6 @@ func main() {
 	}
 	s := os.Args[1]
 
-	// if s == "" {
-	// 	continue
-	// }
-
 	splitted := strings.Split(s, "\\n")
 	// fmt.Println(len(splitted))
 	for j, line := range splitted {
@@ -26,10 +22,12 @@ func main() {
 			j = j + 1
 		} else {
 			for i := 0; i < 8; i++ {
-				for j, char := range line {
+				for p, char := range line {
 				// Ensure that the ASCII value is within the valid range
 					if int(char)-32 < 0 || int(char)-32 > 127 {
-						fmt.Print("Invalid ASCII value:", line[j])
+						fmt.Print("Invalid ASCII value:", line[p])
+						j=j+1
+
 					}
 					fmt.Print(ReplaceString(char, i))
 				}
@@ -41,13 +39,6 @@ func main() {
 
 func ReplaceString(a rune, b int) string {
 	lines := readLinesFromFile("standard.txt")
-
-	// Ensure that the ASCII value is within the valid range
-	// if int(a)-32 < 0 || int(a)-32 > 127 {
-	// 	fmt.Print("Invalid ASCII value:", a)
-	// 	return ""
-	// }
-
 	// Calculate the index of the line based on the ASCII value and offset
 	index := (int(a)-32)*9 + b + 1
 
@@ -55,10 +46,7 @@ func ReplaceString(a rune, b int) string {
 	if index < 0 || index >= len(lines) {
 		return ""
 	}
-	// if index < 0 || index >= len(lines) {
-	// 	fmt.Println("Invalid index:", index)
-	// 	return ""
-	// }
+	
 	return lines[index]
 }
 
@@ -66,7 +54,7 @@ func readLinesFromFile(filename string) []string {
 	filecontent, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println("Error reading file:", err)
-		return nil
+		os.Exit(0)
 	}
 	lines := strings.Split(string(filecontent), "\n")
 	return lines
