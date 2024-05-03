@@ -7,22 +7,33 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2  {
+        fmt.Println("Please provide ")
+        return
+    }
     s := os.Args[1]
     var builder strings.Builder
+	// if s == "" {
+	// 	continue
+	// }
 
     splitted := strings.Split(s, "\\n")
-	 fmt.Println(splitted)
-    for _, line := range splitted {
-		if line==""{
+	// fmt.Println(len(splitted))
+    for j, line := range splitted {
+		if line==""&&j!=0{
 			builder.WriteString("\n")
 
-		}else{
+		}else if line==""&&j==0{
+			j=j+1
+		}else {
         for i := 0; i < 8; i++ {
             for _, char := range line {
                 builder.WriteString(sis(char, i))
             }
             builder.WriteString("\n")
         } }
+
+	
 
 		
 
