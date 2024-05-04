@@ -12,52 +12,45 @@ func main() {
 		return
 	}
 	s := os.Args[1]
-
-	splitted := strings.Split(s, "\\n")
-	// fmt.Println(len(splitted))
-	for j, line := range splitted {
-		if line == "" && j != 0 {
-			fmt.Println()
-		} else if line == "" && j == 0 {
-			j = j + 1
-		} else {
-			for i := 0; i < 8; i++ {
-				for p, char := range line {
-					// Ensure that the ASCII value is within the valid range
-					if int(char)-32 < 0 || int(char)-32 > 127 {
-						fmt.Print("Invalid ASCII value:", line[p])
-						j = j + 1
-
-					}
-					fmt.Print(ReplaceString(char, i))
-				}
-				fmt.Println()
-			}
-		}
-	}
-}
-
-func ReplaceString(a rune, b int) string {
-	lines := readLinesFromFile("thinkertoy.txt")
-	// Calculate the index of the line based on the ASCII value and offset
-	index := (int(a)-32)*9 + b + 1
-
-	// Ensure that the index is within the valid range
-	if index < 0 || index >= len(lines) {
-		return ""
-	}
-
-	return lines[index]
-}
-
-func readLinesFromFile(filename string) []string {
-	filecontent, err := os.ReadFile(filename)
+	filecontent, err := os.ReadFile("thinkertoy.txt")
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 		os.Exit(0)
 	}
-	s := string(filecontent)
-	s = strings.ReplaceAll(s, "\r", "")
-	lines := strings.Split(s, "\n")
-	return lines
+	str := string(filecontent)
+	str = strings.ReplaceAll(str, "\r", "")
+	lines := strings.Split(str, "\n")
+
+	splitted := strings.Split(s, "\\n")
+	// fmt.Println(len(splitted))
+	operation(splitted, lines)
+}
+
+func FindLine(lines []string, char rune, pos int) string {
+	// Calculate the index of the line based on the ASCII value and offset
+	index := (int(char)-32)*9 + pos + 1
+	return lines[index]
+}
+
+func operation(splitted, lines []string) {
+	for j, line := range splitted {
+		if line == "" && j == 0 {
+			j = j + 1
+		} else if line == "" && j != 0 {
+			fmt.Println() // newline
+		} else {
+			for i := 0; i < 8; i++ {
+				for _, char := range line {
+					// Ensure that the ASCII value is within the valid range
+					if int(char)-32 < 0 || int(char)-32 > 127 {
+						fmt.Print("Invalid ASCII value:", char)
+						j = j + 1
+					} else {
+						fmt.Print(FindLine(lines, char, i))
+					}
+				}
+				fmt.Println() // newline
+			}
+		}
+	}
 }
