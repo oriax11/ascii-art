@@ -1,2 +1,0 @@
-main 
-os args 
