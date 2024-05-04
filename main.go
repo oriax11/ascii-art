@@ -34,11 +34,14 @@ func FindLine(lines []string, char rune, pos int) string {
 
 func operation(splittedarg, lines []string) {
 	for j, line := range splittedarg {
-		if line == "" && j == 0 {
-			j = j + 1
-		} else if line == "" && j != 0 {
+		if line == "" && j == 0 && len(splittedarg)==1{
+			j++
+		} else if line == "" && j == 0 && splittedarg[j+1]!=""{
 			fmt.Println() // newline
-		} else {
+
+		}      else if line == "" &&j>0 && len(splittedarg)>1 {
+			fmt.Println() // newline
+		} else if line!=""{
 			for i := 0; i < 8; i++ {
 				for _, char := range line {
 					// Ensure that the ASCII value is within the valid range
