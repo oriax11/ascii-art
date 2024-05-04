@@ -12,7 +12,7 @@ func main() {
 		return
 	}
 	s := os.Args[1]
-	filecontent, err := os.ReadFile("thinkertoy.txt")
+	filecontent, err := os.ReadFile("standard.txt")
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 		os.Exit(0)
@@ -21,9 +21,9 @@ func main() {
 	str = strings.ReplaceAll(str, "\r", "")
 	lines := strings.Split(str, "\n")
 
-	splitted := strings.Split(s, "\\n")
-	// fmt.Println(len(splitted))
-	operation(splitted, lines)
+	splittedarg := strings.Split(s, "\\n")
+	//  fmt.Println(splittedarg)
+	operation(splittedarg, lines)
 }
 
 func FindLine(lines []string, char rune, pos int) string {
@@ -32,8 +32,8 @@ func FindLine(lines []string, char rune, pos int) string {
 	return lines[index]
 }
 
-func operation(splitted, lines []string) {
-	for j, line := range splitted {
+func operation(splittedarg, lines []string) {
+	for j, line := range splittedarg {
 		if line == "" && j == 0 {
 			j = j + 1
 		} else if line == "" && j != 0 {
@@ -44,7 +44,6 @@ func operation(splitted, lines []string) {
 					// Ensure that the ASCII value is within the valid range
 					if int(char)-32 < 0 || int(char)-32 > 127 {
 						fmt.Print("Invalid ASCII value:", char)
-						j = j + 1
 					} else {
 						fmt.Print(FindLine(lines, char, i))
 					}
